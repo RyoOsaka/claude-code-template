@@ -191,7 +191,8 @@ Hono + TypeScript + Drizzle ORM のバックエンド構成。
 | 種別 | ファイル | 内容 |
 |------|---------|------|
 | rules | typescript.md | 型定義・Zod バリデーション・エラーハンドリング |
-| rules | hono.md | ルーティング・ミドルウェア・レスポンス形式（パス条件付き） |
+| rules | api-design.md | URL設計・レスポンス形式・ステータスコード・ページネーション（パス条件付き） |
+| rules | hono.md | Hono プロジェクト規約（ルート構成・ミドルウェア順序・Context 型）（パス条件付き） |
 | rules | security.md | 認証・CORS・レートリミット・SQLインジェクション対策 |
 | rules | logging.md | ログレベル・構造化ログ・機密情報マスク（パス条件付き） |
 | skills | `/endpoint <リソース>` | API エンドポイント + Zod スキーマ + CRUD 生成 |

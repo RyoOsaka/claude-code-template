@@ -4,9 +4,10 @@
 
 ### rules/
 - [x] typescript.md - 型定義、エラーハンドリング、インポート
-- [x] hono.md - ルーティング記法、ミドルウェア、レスポンス形式
+- [x] hono.md - プロジェクト固有の Hono 規約（ルート構成、ミドルウェア順序、Context 型）
 - [x] security.md - 認証、CORS、レートリミット、SQLi対策
 - [x] logging.md - ログレベル、構造化ログ、機密情報マスク
+- [x] api-design.md - URL設計、HTTPメソッド、レスポンス形式、ページネーション、エラーコード
 
 ### skills/
 - [x] endpoint/ - API エンドポイント生成
@@ -16,16 +17,7 @@
 
 ### rules（設計規約）- 優先度順
 
-1. **api-design.md** [高]
-   - URL設計（複数形、ケバブケース、リソースベース）
-   - HTTPメソッドの意味論（POST=作成、PUT=全体置換、PATCH=部分更新）
-   - レスポンス形式の統一（エンベロープ、エラー形式）
-   - ページネーション規約（cursor vs offset）
-   - バージョニング戦略
-   - クエリパラメータ規約（フィルタ、ソート）
-   - endpoint skill の設計基盤になる
-
-2. **database.md** [高]
+1. **database.md** [高]
    - テーブル命名（スネークケース、複数形）
    - カラム命名（created_at, updated_at, deleted_at）
    - インデックス戦略（検索・ソート対象、複合インデックス）
@@ -34,7 +26,7 @@
    - リレーション設計
    - パス条件: src/db/**, drizzle/**
 
-3. **testing.md** [高]
+2. **testing.md** [高]
    - テスト構成（単体 / 統合 / E2E の境界）
    - 何をテストすべきか（ルート、サービス、バリデーション）
    - モック戦略（DB、外部API）
@@ -42,11 +34,11 @@
    - カバレッジ方針
    - パス条件: src/**/*.test.ts, tests/**
 
-4. **error-handling.md** [中]
+3. **error-handling.md** [中]
    - エラーコード体系（アプリケーション独自コード）
    - カスタムエラークラスの階層設計
    - クライアント向けエラーレスポンスの形式
-   - 注: typescript.md に一部あるが体系的に整理する価値がある
+   - 注: typescript.md と api-design.md に一部あるが体系的に整理する価値がある
 
 ### skills（コード生成）- 優先度順
 

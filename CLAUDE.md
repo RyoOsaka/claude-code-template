@@ -57,6 +57,7 @@ feat|fix|docs|style|refactor|test|chore: 日本語の説明
 ### ルール
 - NEVER: main に直接コミット
 - YOU MUST: feature ブランチで作業 → PR → マージ → ブランチ削除
+- YOU MUST: コード変更時は「ブランチ作成 → commit → push」を一連の流れで行う
 
 ## Environment
 

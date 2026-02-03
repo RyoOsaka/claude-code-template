@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker compose:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(wc:*)",
+      "Bash(gh repo create:*)",
+      "Bash(gh --version:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf .git)",
+      "Bash(rm -rf node_modules)",
+      "Bash(git push --force origin main)",
+      "Bash(git push -f origin main)",
+      "Bash(git reset --hard origin/main)",
+      "Bash(npm publish)",
+      "Write(/etc/passwd)",
+      "Write(/etc/shadow)",
+      "Write(~/.ssh/id_rsa)",
+      "Write(~/.ssh/id_ed25519)",
+      "Edit(/etc/passwd)",
+      "Edit(/etc/shadow)",
+      "Edit(~/.ssh/id_rsa)",
+      "Edit(~/.ssh/id_ed25519)"
+    ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
+  }
+}

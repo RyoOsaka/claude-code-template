@@ -6,42 +6,38 @@
 
 ## Tech Stack
 
-- Frontend: React + TypeScript + Vite
-- Backend: Supabase (PostgreSQL, Auth, Storage)
-- Styling: CSS Modules（検討中: TailwindCSS）
-- State: React Context API / Zustand
-- Data Fetching: TanStack Query
-- Hosting: Vercel
-- Package Manager: pnpm
+<!-- プロジェクトの技術スタックを記載する。例: -->
+<!-- - Frontend: React + TypeScript + Vite -->
+<!-- - Backend: Hono + TypeScript -->
+<!-- - Database: PostgreSQL -->
+<!-- - Hosting: Vercel -->
+<!-- - Package Manager: pnpm -->
 
 ## Development Commands
 
-```bash
-pnpm install              # 依存パッケージインストール
-pnpm dev                  # 開発サーバー起動
-pnpm build                # プロダクションビルド
-pnpm preview              # ビルドプレビュー
-pnpm lint                 # ESLint
-pnpm typecheck            # 型チェック
-pnpm test                 # テスト実行
-pnpm types:gen            # Supabase 型定義生成
-docker compose up         # Docker 開発環境起動
-```
+<!-- プロジェクトのコマンドを記載する。例: -->
+<!-- ```bash -->
+<!-- pnpm install              # 依存パッケージインストール -->
+<!-- pnpm dev                  # 開発サーバー起動 -->
+<!-- pnpm build                # プロダクションビルド -->
+<!-- pnpm lint                 # Linter -->
+<!-- pnpm typecheck            # 型チェック -->
+<!-- pnpm test                 # テスト実行 -->
+<!-- docker compose up         # Docker 開発環境起動 -->
+<!-- ``` -->
 
 ## Project Structure
 
-```
-src/
-├── components/
-│   ├── common/           # 汎用 UI コンポーネント
-│   └── features/         # 機能特化コンポーネント
-├── pages/                # ページコンポーネント
-├── hooks/                # カスタムフック
-├── lib/supabase.ts       # Supabase クライアント（一元管理）
-├── types/database.types.ts  # Supabase 自動生成型
-├── contexts/             # React Context
-└── constants/            # 定数
-```
+<!-- プロジェクトのディレクトリ構造を記載する。例: -->
+<!-- ``` -->
+<!-- src/ -->
+<!-- ├── components/ -->
+<!-- ├── pages/ -->
+<!-- ├── hooks/ -->
+<!-- ├── lib/ -->
+<!-- ├── types/ -->
+<!-- └── constants/ -->
+<!-- ``` -->
 
 ## Git Workflow
 
@@ -66,26 +62,22 @@ feat|fix|docs|style|refactor|test|chore: 日本語の説明
 
 - Docker First: `docker compose up` で環境が立ち上がること
 - 設定値は全て環境変数（`.env`）。ハードコード厳禁
-- pnpm 使用。バージョンは `packageManager` で固定
-- 依存ライブラリのバージョンは固定（`^` `~` 不使用）
-- `pnpm-lock.yaml` は必ずコミット
+- ロックファイル（`pnpm-lock.yaml`, `package-lock.json` 等）は必ずコミット
+- 依存ライブラリのバージョンは固定する
 
 ## Critical Rules
 
 ### NEVER
-- `any` 型を使用しない（`unknown` + 型ガードを使う）
-- `@ts-ignore` / `@ts-nocheck` を使用しない
-- Supabase の認証情報をハードコードしない
-- RLS なしでテーブルを公開しない
 - `.env` を git にコミットしない
 - テスト失敗状態でコミットしない
+- 認証情報をハードコードしない
 
 ### YOU MUST
-- すべてのコンポーネントに Props 型定義を付ける
-- `tsconfig.json` で `strict: true`
+- コミット前に lint と型チェックを通す
 - 非同期処理にエラーハンドリングを実装する
 - 新機能にはテストを作成する
-- コミット前に `pnpm lint` と `pnpm typecheck` を通す
+
+<!-- スタック固有のルールは .claude/rules/ に追加する -->
 
 ## AI Assistant Behavior
 

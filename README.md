@@ -1,27 +1,57 @@
-# Claude Code プロジェクトテンプレート 運用ガイド
+# Claude Code プロジェクトテンプレート
 
-Claude Code を使った開発の生産性を最大化するためのファイル構成と運用方法。
+Claude Code を使った開発の生産性を最大化するための設定テンプレート。
+技術スタックに依存しない汎用構成で、プロジェクトに合わせてカスタマイズして使う。
+
+## クイックスタート
+
+### 1. テンプレートをコピー
+
+```bash
+# このリポジトリをクローン or テンプレートとして使用
+cp -r claude-code-template/.claude your-project/.claude
+cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
+```
+
+### 2. CLAUDE.md を編集
+
+`CLAUDE.md` のプレースホルダー（`<!-- ... -->`）を自分のプロジェクト情報で埋める:
+- Tech Stack
+- Development Commands
+- Project Structure
+
+### 3. examples/ からルール・スキルをコピー
+
+プロジェクトのスタックに合う例を選んでコピーする:
+
+```bash
+# React + Supabase の場合
+cp examples/react-supabase/rules/* .claude/rules/
+cp -r examples/react-supabase/skills/* .claude/skills/
+
+# Hono バックエンドの場合
+cp examples/hono-backend/rules/* .claude/rules/
+cp -r examples/hono-backend/skills/* .claude/skills/
+```
+
+各 `CLAUDE.md.example` も参考にして CLAUDE.md を追記する。
+
+### 4. 不要な examples/ を削除
+
+セットアップ完了後、examples/ ディレクトリは不要なので削除してよい。
 
 ## ファイル構成
 
 ```
 project-root/
 ├── CLAUDE.md                    # コア指示（常時読み込み）
-├── CLAUDE.local.md              # 個人設定（自動gitignore）
-└── .claude/
-    ├── settings.json            # プロジェクト設定
-    ├── rules/                   # 分野別ルール（常時読み込み）
-    │   ├── typescript.md
-    │   ├── react.md
-    │   ├── supabase.md
-    │   └── security.md
-    └── skills/                  # ワークフロー（オンデマンド読み込み）
-        ├── component/
-        │   └── SKILL.md
-        ├── api/
-        │   └── SKILL.md
-        └── page/
-            └── SKILL.md
+├── .claude/
+│   ├── settings.json            # プロジェクト設定
+│   ├── rules/                   # 分野別ルール（常時読み込み）
+│   └── skills/                  # ワークフロー（オンデマンド読み込み）
+└── examples/                    # スタック別サンプル
+    ├── react-supabase/          # React + Supabase フロントエンド
+    └── hono-backend/            # Hono バックエンド
 ```
 
 ## 3つの仕組みの使い分け
@@ -33,7 +63,6 @@ project-root/
 | **読み込み** | セッション開始時に**常時**読み込まれる |
 | **コスト** | 毎セッションでコンテキストを消費し続ける |
 | **推奨サイズ** | **500行以下**（長いほど指示の遵守率が下がる） |
-| **置き場所** | プロジェクトルート or `.claude/CLAUDE.md` |
 
 #### 書くべきもの
 - コミュニケーション言語
@@ -41,13 +70,12 @@ project-root/
 - Git ワークフロー（ブランチ命名、コミット規約）
 - 技術スタック概要
 - NEVER / YOU MUST ルール（最重要なもののみ）
-- プロジェクト固有の注意点
 
 #### 書くべきでないもの
 - 長いコードサンプル（Claude はコードを読めば理解できる）
 - 標準的な言語規約（TypeScript の基本的な使い方など）
 - 詳細な API 仕様やスキーマ定義
-- ツールの一般的な使い方（Vercel のセットアップ手順など）
+- ツールの一般的な使い方
 - 変更頻度の高い情報
 
 ### 2. .claude/rules/ - 分野別ルール
@@ -59,33 +87,26 @@ project-root/
 | **目的** | CLAUDE.md を分割して**メンテナンス性**を向上させる |
 | **特徴** | `paths` 指定で特定ファイルにのみ適用可能 |
 
-#### CLAUDE.md との違い
-- コンテキストコストは同じ（常時読み込み）
-- 純粋にファイル管理の利便性のための分割手段
-- パス条件を付けると、そのパスのファイルを扱う時のみ読み込まれる
-
 #### パス指定の例
 
 ```yaml
-# .claude/rules/supabase.md
+# .claude/rules/react.md
 ---
 paths:
-  - "src/lib/supabase.ts"
-  - "src/hooks/use*.ts"
-  - "supabase/**"
+  - "src/components/**"
+  - "src/pages/**"
 ---
 
-# Supabase ルール
-- RLS は必須
-- クライアントは lib/supabase.ts で一元管理
+# React ルール
+- 関数コンポーネント + Hooks のみ
 ...
 ```
 
 パス指定なしの場合は CLAUDE.md と同様に常時読み込まれる。
 
 #### 使いどころ
-- CLAUDE.md が 500行を超えそうな時の分割先
-- 特定技術領域（DB、認証、テストなど）のルールをファイル単位で管理したい時
+- CLAUDE.md が長くなりすぎた時の分割先
+- 特定技術領域のルールをファイル単位で管理したい時
 - パス条件でコンテキスト消費を抑えたい時
 
 ### 3. .claude/skills/ - オンデマンドワークフロー
@@ -110,26 +131,23 @@ allowed-tools: Read, Grep, Bash       # 使用可能なツールを制限
 ---
 
 # スキルの指示内容
-
-ここに詳細な手順やルールを記述する。
 $ARGUMENTS で引数を参照可能。
 ```
 
-#### 起動方式の2パターン
+#### 起動方式
 
 **手動起動（ユーザーが明示的に呼ぶ）**
 ```
 > /component WorkoutCard
-> /api workouts
-> /page dashboard
+> /endpoint users
 ```
 
 **自動起動（Claude が判断して使う）**
-- `description` に書かれた内容と、ユーザーの指示がマッチした場合
-- `disable-model-invocation: true` にすると自動起動を無効化できる
+- `description` の内容とユーザーの指示がマッチした場合
+- `disable-model-invocation: true` で自動起動を無効化できる
 
 #### 使いどころ
-- コンポーネント生成、API フック生成などの繰り返しタスク
+- コンポーネント生成、API エンドポイント生成などの繰り返しタスク
 - 長い手順書が必要だが、常時読み込みたくないもの
 - デプロイ、マイグレーションなどの定型ワークフロー
 
@@ -169,44 +187,72 @@ CLAUDE.md が長いほど:
 - 重要な指示が埋もれて遵守率が下がる
 - セッションで使える残りコンテキストが減る
 
-## このテンプレートのサンプルファイル
+## サンプルスタック
 
-| ファイル | 説明 |
-|---------|------|
-| [CLAUDE.md](./CLAUDE.md) | スリム化されたコア指示のサンプル（~200行） |
-| [.claude/rules/typescript.md](./.claude/rules/typescript.md) | TypeScript ルール |
-| [.claude/rules/react.md](./.claude/rules/react.md) | React ルール（パス指定付き） |
-| [.claude/rules/supabase.md](./.claude/rules/supabase.md) | Supabase ルール（パス指定付き） |
-| [.claude/rules/security.md](./.claude/rules/security.md) | セキュリティルール |
-| [.claude/skills/component/SKILL.md](./.claude/skills/component/SKILL.md) | `/component` スキル |
-| [.claude/skills/api/SKILL.md](./.claude/skills/api/SKILL.md) | `/api` スキル |
-| [.claude/skills/page/SKILL.md](./.claude/skills/page/SKILL.md) | `/page` スキル |
+### react-supabase/
 
-## 現状の CLAUDE.md からの移行イメージ
+React + TypeScript + Vite + Supabase のフロントエンド構成。
 
+| 種別 | ファイル | 内容 |
+|------|---------|------|
+| rules | typescript.md | 型定義・エラーハンドリング・インポート |
+| rules | react.md | コンポーネント設計・Hooks・状態管理（パス条件付き） |
+| rules | supabase.md | クライアント管理・RLS・クエリ（パス条件付き） |
+| rules | security.md | 認証・環境変数・入力値バリデーション |
+| skills | `/component <名前>` | React コンポーネント + CSS Modules + テスト生成 |
+| skills | `/api <リソース>` | Supabase + TanStack Query データ取得フック生成 |
+| skills | `/page <ページ>` | ページコンポーネント + ルーティング設定 |
+
+### hono-backend/
+
+Hono + TypeScript + Drizzle ORM のバックエンド構成。
+
+| 種別 | ファイル | 内容 |
+|------|---------|------|
+| rules | typescript.md | 型定義・Zod バリデーション・エラーハンドリング |
+| rules | hono.md | ルーティング・ミドルウェア・レスポンス形式（パス条件付き） |
+| rules | security.md | 認証・CORS・レートリミット・SQLインジェクション対策 |
+| skills | `/endpoint <リソース>` | API エンドポイント + Zod スキーマ + CRUD 生成 |
+| skills | `/middleware <名前>` | Hono ミドルウェア + テスト生成 |
+
+## 独自ルール・スキルの作り方
+
+### ルールの追加
+
+`.claude/rules/` に Markdown ファイルを作成する:
+
+```markdown
+---
+paths:                    # 省略可。省略すると常時読み込み
+  - "src/db/**"
+  - "drizzle/**"
+---
+
+# データベースルール
+
+- マイグレーションは Drizzle Kit で管理する
+- テーブル名はスネークケース
+- ...
 ```
-現在の CLAUDE.md（832行）
-  │
-  ├─ 残す（CLAUDE.md ~200行）
-  │   ├─ Communication Preferences
-  │   ├─ Development Commands
-  │   ├─ Git Workflow
-  │   ├─ Tech Stack 概要
-  │   └─ Critical Rules（最重要のみ）
-  │
-  ├─ rules/ に移動（常時読み込み、ファイル分割）
-  │   ├─ TypeScript/React ベストプラクティス → rules/typescript.md, rules/react.md
-  │   ├─ Supabase 連携ルール → rules/supabase.md
-  │   └─ セキュリティルール → rules/security.md
-  │
-  ├─ skills/ に移動（オンデマンド読み込み）
-  │   ├─ コンポーネント生成手順 → skills/component/
-  │   ├─ API フック生成手順 → skills/api/
-  │   └─ ページ生成手順 → skills/page/
-  │
-  └─ 削除
-      ├─ 長いコードサンプル（Claude はコード読めば分かる）
-      ├─ Vercel セットアップ手順（一般知識）
-      ├─ CI/CD 設定例（一般知識）
-      └─ ツール一覧（一般知識）
+
+### スキルの追加
+
+`.claude/skills/<name>/SKILL.md` を作成する:
+
+```markdown
+---
+name: migration
+description: DBマイグレーションを作成する
+argument-hint: <migration-name>
+disable-model-invocation: true
+---
+
+# マイグレーション生成
+
+$ARGUMENTS マイグレーションを作成する。
+
+## 手順
+1. `src/db/schema/` にスキーマを追加
+2. `pnpm db:generate` でマイグレーション生成
+3. ...
 ```

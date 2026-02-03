@@ -25,10 +25,6 @@ cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
 プロジェクトのスタックに合う例を選んでコピーする:
 
 ```bash
-# React + Supabase の場合
-cp examples/react-supabase/rules/* .claude/rules/
-cp -r examples/react-supabase/skills/* .claude/skills/
-
 # Hono バックエンドの場合
 cp examples/hono-backend/rules/* .claude/rules/
 cp -r examples/hono-backend/skills/* .claude/skills/
@@ -50,7 +46,6 @@ project-root/
 │   ├── rules/                   # 分野別ルール（常時読み込み）
 │   └── skills/                  # ワークフロー（オンデマンド読み込み）
 └── examples/                    # スタック別サンプル
-    ├── react-supabase/          # React + Supabase フロントエンド
     └── hono-backend/            # Hono バックエンド
 ```
 
@@ -189,20 +184,6 @@ CLAUDE.md が長いほど:
 
 ## サンプルスタック
 
-### react-supabase/
-
-React + TypeScript + Vite + Supabase のフロントエンド構成。
-
-| 種別 | ファイル | 内容 |
-|------|---------|------|
-| rules | typescript.md | 型定義・エラーハンドリング・インポート |
-| rules | react.md | コンポーネント設計・Hooks・状態管理（パス条件付き） |
-| rules | supabase.md | クライアント管理・RLS・クエリ（パス条件付き） |
-| rules | security.md | 認証・環境変数・入力値バリデーション |
-| skills | `/component <名前>` | React コンポーネント + CSS Modules + テスト生成 |
-| skills | `/api <リソース>` | Supabase + TanStack Query データ取得フック生成 |
-| skills | `/page <ページ>` | ページコンポーネント + ルーティング設定 |
-
 ### hono-backend/
 
 Hono + TypeScript + Drizzle ORM のバックエンド構成。
@@ -212,6 +193,7 @@ Hono + TypeScript + Drizzle ORM のバックエンド構成。
 | rules | typescript.md | 型定義・Zod バリデーション・エラーハンドリング |
 | rules | hono.md | ルーティング・ミドルウェア・レスポンス形式（パス条件付き） |
 | rules | security.md | 認証・CORS・レートリミット・SQLインジェクション対策 |
+| rules | logging.md | ログレベル・構造化ログ・機密情報マスク（パス条件付き） |
 | skills | `/endpoint <リソース>` | API エンドポイント + Zod スキーマ + CRUD 生成 |
 | skills | `/middleware <名前>` | Hono ミドルウェア + テスト生成 |
 

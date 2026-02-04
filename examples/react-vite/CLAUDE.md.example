@@ -1,0 +1,82 @@
+# CLAUDE.md（React + Vite 向け追記例）
+
+> この内容をプロジェクトルートの `CLAUDE.md` に追記・マージしてください。
+> ルールファイルとスキルファイルは `.claude/` ディレクトリにコピーしてください。
+
+## セットアップ
+
+```bash
+# ルールファイルをコピー
+cp examples/react-vite/rules/*.md .claude/rules/
+
+# スキルファイルをコピー
+cp -r examples/react-vite/skills/* .claude/skills/
+```
+
+## Tech Stack
+
+- Runtime: Node.js
+- Frontend: React + TypeScript + Vite
+- Styling: CSS Modules / TailwindCSS（プロジェクトに合わせて選択）
+- State: React Context API / Zustand
+- Data Fetching: TanStack Query
+- Validation: Zod
+- Testing: Vitest + React Testing Library
+- Linter: ESLint + Prettier
+- Hosting: Vercel
+- Package Manager: pnpm
+
+## Development Commands
+
+```bash
+pnpm install              # 依存パッケージインストール
+pnpm dev                  # 開発サーバー起動（Vite）
+pnpm build                # プロダクションビルド
+pnpm preview              # ビルドプレビュー
+pnpm lint                 # ESLint 実行
+pnpm typecheck            # tsc --noEmit
+pnpm test                 # Vitest テスト実行
+pnpm test:watch           # テスト（ウォッチモード）
+```
+
+## Project Structure
+
+```
+src/
+├── App.tsx               # ルートコンポーネント
+├── main.tsx              # エントリポイント
+├── components/
+│   ├── common/           # 汎用 UI（Button, Modal, Input 等）
+│   └── features/         # 機能特化（LoginForm, UserCard 等）
+├── pages/                # ページコンポーネント
+├── hooks/                # カスタムフック
+├── lib/
+│   ├── api.ts            # API クライアント
+│   └── utils.ts          # ユーティリティ
+├── types/                # 型定義
+├── contexts/             # React Context
+├── constants/            # 定数
+├── styles/               # グローバルスタイル
+└── __tests__/            # テスト（または各ファイルの隣に配置）
+vite.config.ts            # Vite 設定
+vitest.config.ts          # Vitest 設定
+tsconfig.json             # TypeScript 設定
+```
+
+## Critical Rules（追加分）
+
+### NEVER
+- `any` 型を使用しない（`unknown` + 型ガードを使う）
+- `@ts-ignore` / `@ts-nocheck` を使用しない
+- `dangerouslySetInnerHTML` を使用しない（XSS 対策）
+- クラスコンポーネントを使用しない（関数コンポーネント + Hooks のみ）
+- API キーやシークレットをフロントエンドコードに含めない
+- `useEffect` 内で直接データフェッチしない（TanStack Query を使う）
+
+### YOU MUST
+- `tsconfig.json` で `strict: true` を有効にする
+- すべてのコンポーネントに Props の型定義を付ける
+- API レスポンスの型を定義する
+- フォーム入力は Zod でバリデーションする
+- コミット前に `pnpm lint` と `pnpm typecheck` を通す
+- 新しいコンポーネント・フックにはテストを作成する

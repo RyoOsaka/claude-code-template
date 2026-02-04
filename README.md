@@ -13,14 +13,19 @@ cp -r claude-code-template/.claude your-project/.claude
 cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
 ```
 
-### 2. CLAUDE.md を編集
+### 2. CHECKLIST.md で設計判断を整理
+
+`CHECKLIST.md` を開き、プロジェクトで必要な設計判断を検討する。
+決定した内容は CLAUDE.md や `.claude/rules/` に反映する。
+
+### 3. CLAUDE.md を編集
 
 `CLAUDE.md` のプレースホルダー（`<!-- ... -->`）を自分のプロジェクト情報で埋める:
 - Tech Stack
 - Development Commands
 - Project Structure
 
-### 3. examples/ からルール・スキルをコピー
+### 4. examples/ からルール・スキルをコピー
 
 プロジェクトのスタックに合う例を選んでコピーする:
 
@@ -36,7 +41,7 @@ cp -r examples/react-vite/skills/* .claude/skills/
 
 各 `CLAUDE.md.example` も参考にして CLAUDE.md を追記する。
 
-### 4. 不要な examples/ を削除
+### 5. 不要な examples/ を削除
 
 セットアップ完了後、examples/ ディレクトリは不要なので削除してよい。
 
@@ -45,6 +50,7 @@ cp -r examples/react-vite/skills/* .claude/skills/
 ```
 project-root/
 ├── CLAUDE.md                    # コア指示（常時読み込み）
+├── CHECKLIST.md                 # 設計判断チェックリスト（人間が埋める）
 ├── .claude/
 │   ├── settings.json            # プロジェクト設定
 │   ├── rules/                   # 分野別ルール（常時読み込み）

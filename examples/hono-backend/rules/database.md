@@ -29,7 +29,7 @@ export const OrderItems = pgTable('OrderItems', { ... }); // PascalCase
 - 全テーブル共通カラム:
   - `id`: UUID（`gen_random_uuid()` で自動生成）
   - `created_at`: `timestamp with time zone`、`defaultNow()`
-  - `updated_at`: `timestamp with time zone`、`defaultNow()` + 更新時にアプリ側でセット
+  - `updated_at`: `timestamp with time zone`、`defaultNow()`（INSERT 時は DB デフォルト、UPDATE 時は `updatedAt: new Date()` でアプリ側セット）
 - 論理削除を使う場合: `deleted_at`: `timestamp with time zone`（nullable）
 - 外部キーは `{参照先テーブル名の単数形}_id`（`user_id`, `post_id`）
 - boolean カラムは `is_` または `has_` プレフィックス（`is_active`, `has_verified`）

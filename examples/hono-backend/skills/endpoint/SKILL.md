@@ -23,7 +23,7 @@ src/services/${ARGUMENTS}Service.ts  # ビジネスロジック（必要に応�
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { db } from '@/db/client';
 import { $ARGUMENTS } from '@/db/schema/$ARGUMENTS';
 import { NotFoundError } from '@/lib/errors';
@@ -61,15 +61,25 @@ ${ARGUMENTS}Routes.get(
     const { page, limit } = c.req.valid('query');
     const offset = (page - 1) * limit;
 
-    const results = await db
-      .select()
-      .from($ARGUMENTS)
-      .limit(limit)
-      .offset(offset);
+    const [results, [{ count }]] = await Promise.all([
+      db
+        .select()
+        .from($ARGUMENTS)
+        .limit(limit)
+        .offset(offset),
+      db
+        .select({ count: sql<number>`count(*)::int` })
+        .from($ARGUMENTS),
+    ]);
 
     return c.json({
       data: results,
-      meta: { page, limit },
+      meta: {
+        total: count,
+        page,
+        limit,
+        hasMore: offset + results.length < count,
+      },
     });
   },
 );
@@ -121,7 +131,7 @@ ${ARGUMENTS}Routes.put(
 
     const [result] = await db
       .update($ARGUMENTS)
-      .set({ ...input, updatedAt: new Date() })
+      .set({ ...input, updatedAt: new Date() }) // INSERT 時は DB の defaultNow()、UPDATE 時はアプリ側でセット
       .where(eq($ARGUMENTS.id, id))
       .returning();
 
@@ -174,8 +184,10 @@ describe('$ARGUMENTS API', () => {
 
       const body = await res.json();
       expect(body.data).toBeInstanceOf(Array);
+      expect(body.meta).toHaveProperty('total');
       expect(body.meta).toHaveProperty('page');
       expect(body.meta).toHaveProperty('limit');
+      expect(body.meta).toHaveProperty('hasMore');
     });
 
     it('ページネーションが動作する', async () => {

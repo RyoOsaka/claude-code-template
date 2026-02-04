@@ -78,7 +78,9 @@ export class ConflictError extends AppError {
 ```typescript
 // src/middleware/errorHandler.ts
 import type { ErrorHandler } from 'hono';
+import { HTTPException } from 'hono/http-exception';
 import { AppError } from '@/lib/errors';
+import { logger } from '@/lib/logger';
 
 export const errorHandler: ErrorHandler = (err, c) => {
   // AppError（アプリケーションが意図的に投げたエラー）

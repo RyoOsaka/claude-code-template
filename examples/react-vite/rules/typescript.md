@@ -82,6 +82,33 @@ if (isError) {
 }
 ```
 
+## 環境変数
+
+- Vite の環境変数は `VITE_` プレフィックスが必要（`VITE_API_BASE_URL` など）
+- `src/lib/env.ts` で Zod バリデーションし、型安全にアクセスする
+- `import.meta.env` を直接参照しない（`env` オブジェクト経由でアクセスする）
+
+```typescript
+// src/lib/env.ts
+import { z } from 'zod';
+
+const envSchema = z.object({
+  VITE_API_BASE_URL: z.string().url(),
+  // VITE_ENABLE_ANALYTICS: z.coerce.boolean().default(false),
+});
+
+export const env = envSchema.parse(import.meta.env);
+```
+
+```typescript
+// 良い例
+import { env } from '@/lib/env';
+const url = `${env.VITE_API_BASE_URL}/api/v1/users`;
+
+// 悪い例
+const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/users`; // 型安全でない
+```
+
 ## インポート
 
 - ESModules（`import/export`）を使用する

@@ -216,9 +216,10 @@ React + TypeScript + Vite のフロントエンド構成。
 | 種別 | ファイル | 内容 |
 |------|---------|------|
 | rules | react.md | コンポーネント設計・Hooks・状態管理（パス条件付き） |
-| rules | typescript.md | 型定義・Zod バリデーション・エラーハンドリング |
+| rules | typescript.md | 型定義・Zod バリデーション・環境変数・エラーハンドリング |
 | rules | styling.md | CSS Modules・CSS 変数・レスポンシブ（パス条件付き） |
 | rules | testing.md | React Testing Library・MSW・テスト方針（パス条件付き） |
+| rules | api-client.md | API クライアント設計・エラークラス・レスポンス型（パス条件付き） |
 | skills | `/component <名前>` | React コンポーネント + スタイル + テスト生成 |
 | skills | `/hook <名前>` | カスタムフック + テスト生成 |
 

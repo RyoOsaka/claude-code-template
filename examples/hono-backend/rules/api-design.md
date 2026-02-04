@@ -18,7 +18,7 @@ paths:
 GET    /api/v1/users           # 一覧取得
 POST   /api/v1/users           # 作成
 GET    /api/v1/users/:id       # 単体取得
-PATCH  /api/v1/users/:id       # 部分更新
+PUT    /api/v1/users/:id       # 更新
 DELETE /api/v1/users/:id       # 削除
 GET    /api/v1/users/:id/posts # ユーザーの投稿一覧
 ```
@@ -29,12 +29,11 @@ GET    /api/v1/users/:id/posts # ユーザーの投稿一覧
 |---------|------|--------|---------------|
 | GET | リソース取得 | Yes | なし |
 | POST | リソース作成 | No | あり |
-| PUT | リソース全体置換 | Yes | あり |
-| PATCH | リソース部分更新 | No | あり |
+| PUT | リソース更新 | Yes | あり |
 | DELETE | リソース削除 | Yes | なし |
 
-- PUT と PATCH の使い分け: 全フィールド送る場合は PUT、一部だけなら PATCH
-- 基本は **PATCH を優先** する（部分更新の方が一般的）
+- 更新は **PUT に統一** する（PATCH は使わない）
+- 部分更新も PUT で受け付ける（送られたフィールドのみ更新する）
 
 ## レスポンス形式
 

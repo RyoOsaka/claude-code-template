@@ -6,38 +6,67 @@
 
 ## Tech Stack
 
-<!-- プロジェクトの技術スタックを記載する。例: -->
-<!-- - Frontend: React + TypeScript + Vite -->
-<!-- - Backend: Hono + TypeScript -->
-<!-- - Database: PostgreSQL -->
-<!-- - Hosting: Vercel -->
-<!-- - Package Manager: pnpm -->
+<!-- ここにプロジェクトの技術スタックを記載する -->
+<!-- 使わないスタックの行は削除する -->
+
+- Runtime: <!-- Node.js / Bun / Deno / Cloudflare Workers -->
+- Frontend: <!-- React / Next.js / Vue / Svelte --> + TypeScript <!-- + Vite -->
+- Backend: <!-- Hono / Express / Fastify --> + TypeScript
+- Database: <!-- PostgreSQL / MySQL / SQLite -->
+- ORM: <!-- Drizzle / Prisma -->
+- Validation: <!-- Zod / Valibot -->
+- Testing: <!-- Vitest / Jest -->
+- Linter: <!-- ESLint / Biome -->
+- Hosting: <!-- Vercel / Cloudflare / AWS -->
+- Package Manager: <!-- pnpm / npm / bun -->
 
 ## Development Commands
 
-<!-- プロジェクトのコマンドを記載する。例: -->
-<!-- ```bash -->
-<!-- pnpm install              # 依存パッケージインストール -->
-<!-- pnpm dev                  # 開発サーバー起動 -->
-<!-- pnpm build                # プロダクションビルド -->
-<!-- pnpm lint                 # Linter -->
-<!-- pnpm typecheck            # 型チェック -->
-<!-- pnpm test                 # テスト実行 -->
-<!-- docker compose up         # Docker 開発環境起動 -->
-<!-- ``` -->
+```bash
+# --- 以下をプロジェクトに合わせて編集する ---
+pnpm install              # 依存パッケージインストール
+pnpm dev                  # 開発サーバー起動
+pnpm build                # プロダクションビルド
+pnpm preview              # ビルドプレビュー
+pnpm lint                 # Linter 実行
+pnpm typecheck            # 型チェック（tsc --noEmit）
+pnpm test                 # テスト実行
+pnpm test:watch           # テスト（ウォッチモード）
+# pnpm db:generate        # ORM スキーマからマイグレーション生成
+# pnpm db:migrate         # マイグレーション適用
+# pnpm db:studio          # DB ブラウザ起動
+docker compose up         # Docker 開発環境起動
+```
 
 ## Project Structure
 
-<!-- プロジェクトのディレクトリ構造を記載する。例: -->
-<!-- ``` -->
-<!-- src/ -->
-<!-- ├── components/ -->
-<!-- ├── pages/ -->
-<!-- ├── hooks/ -->
-<!-- ├── lib/ -->
-<!-- ├── types/ -->
-<!-- └── constants/ -->
-<!-- ``` -->
+```
+# --- 以下をプロジェクトに合わせて編集する ---
+# フロントエンドの場合:
+src/
+├── components/           # UI コンポーネント
+│   ├── common/           # 汎用（Button, Modal 等）
+│   └── features/         # 機能特化（LoginForm 等）
+├── pages/                # ページコンポーネント
+├── hooks/                # カスタムフック
+├── lib/                  # ユーティリティ、API クライアント
+├── types/                # 型定義
+├── contexts/             # React Context（状態管理）
+└── constants/            # 定数
+
+# バックエンドの場合:
+src/
+├── index.ts              # エントリポイント
+├── routes/               # ルートハンドラ
+├── middleware/            # ミドルウェア
+├── services/             # ビジネスロジック
+├── db/
+│   ├── client.ts         # DB クライアント
+│   ├── schema/           # ORM スキーマ定義
+│   └── migrations/       # マイグレーション
+├── types/                # 型定義
+└── lib/                  # 共通ユーティリティ
+```
 
 ## Git Workflow
 

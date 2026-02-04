@@ -28,6 +28,10 @@ cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
 # Hono バックエンドの場合
 cp examples/hono-backend/rules/* .claude/rules/
 cp -r examples/hono-backend/skills/* .claude/skills/
+
+# React + Vite フロントエンドの場合
+cp examples/react-vite/rules/* .claude/rules/
+cp -r examples/react-vite/skills/* .claude/skills/
 ```
 
 各 `CLAUDE.md.example` も参考にして CLAUDE.md を追記する。
@@ -46,7 +50,8 @@ project-root/
 │   ├── rules/                   # 分野別ルール（常時読み込み）
 │   └── skills/                  # ワークフロー（オンデマンド読み込み）
 └── examples/                    # スタック別サンプル
-    └── hono-backend/            # Hono バックエンド
+    ├── hono-backend/            # Hono バックエンド
+    └── react-vite/              # React + Vite フロントエンド
 ```
 
 ## 3つの仕組みの使い分け
@@ -195,8 +200,27 @@ Hono + TypeScript + Drizzle ORM のバックエンド構成。
 | rules | hono.md | Hono プロジェクト規約（ルート構成・ミドルウェア順序・Context 型）（パス条件付き） |
 | rules | security.md | 認証・CORS・レートリミット・SQLインジェクション対策 |
 | rules | logging.md | ログレベル・構造化ログ・機密情報マスク（パス条件付き） |
+| rules | database.md | テーブル/カラム命名・Drizzle スキーマ設計・インデックス・マイグレーション（パス条件付き） |
+| rules | testing.md | テスト構成・モック戦略・テストデータ管理・カバレッジ方針（パス条件付き） |
+| rules | error-handling.md | エラークラス階層・エラーコード体系・グローバルエラーハンドラ（パス条件付き） |
 | skills | `/endpoint <リソース>` | API エンドポイント + Zod スキーマ + CRUD 生成 |
 | skills | `/middleware <名前>` | Hono ミドルウェア + テスト生成 |
+| skills | `/migration <テーブル名>` | Drizzle スキーマ + マイグレーション生成 |
+| skills | `/service <リソース名>` | サービス層（ビジネスロジック）+ テスト生成 |
+| other | .env.example | 環境変数テンプレート |
+
+### react-vite/
+
+React + TypeScript + Vite のフロントエンド構成。
+
+| 種別 | ファイル | 内容 |
+|------|---------|------|
+| rules | react.md | コンポーネント設計・Hooks・状態管理（パス条件付き） |
+| rules | typescript.md | 型定義・Zod バリデーション・エラーハンドリング |
+| rules | styling.md | CSS Modules・CSS 変数・レスポンシブ（パス条件付き） |
+| rules | testing.md | React Testing Library・MSW・テスト方針（パス条件付き） |
+| skills | `/component <名前>` | React コンポーネント + スタイル + テスト生成 |
+| skills | `/hook <名前>` | カスタムフック + テスト生成 |
 
 ## 独自ルール・スキルの作り方
 

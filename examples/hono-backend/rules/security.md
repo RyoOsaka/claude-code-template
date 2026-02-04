@@ -41,7 +41,7 @@ app.use('/api/*', cors({
     const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') ?? [];
     return allowedOrigins.includes(origin) ? origin : '';
   },
-  allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   maxAge: 86400,

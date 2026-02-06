@@ -1,6 +1,11 @@
 {
   "permissions": {
     "allow": [
+      "Bash(pnpm:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(bun:*)",
+      "Bash(bunx:*)",
       "Bash(docker compose:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",

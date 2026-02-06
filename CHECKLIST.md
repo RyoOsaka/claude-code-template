@@ -85,3 +85,18 @@
    - **CLAUDE.md** の Tech Stack / Critical Rules セクション
    - **.claude/rules/** の各ルールファイル
 4. このチェックリスト自体はプロジェクトに含めても含めなくてもよい
+
+---
+
+## 反映先マッピング
+
+| チェック項目 | 反映先 |
+|------------|-------|
+| データベース設計 | `CLAUDE.md` Tech Stack、`.claude/rules/database.md` |
+| 認証・認可 | `CLAUDE.md` Critical Rules、`.claude/rules/security.md` |
+| API 設計 | `.claude/rules/api-design.md` |
+| フロントエンド | `CLAUDE.md` Tech Stack、`.claude/rules/react.md` 等 |
+| テスト | `.claude/rules/testing.md` |
+| インフラ・デプロイ | `CLAUDE.md` Tech Stack / Development Commands |
+| 運用・監視 | `.claude/rules/logging.md` |
+| コード品質 | `CLAUDE.md` Critical Rules |

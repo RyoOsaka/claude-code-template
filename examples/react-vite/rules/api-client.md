@@ -6,6 +6,9 @@ paths:
 
 # API クライアントルール
 
+> **Note**: このルールは `examples/hono-backend/rules/api-design.md` のレスポンス形式に準拠しています。
+> バックエンドが異なる場合は、レスポンス型（`ApiResponse`, `ApiListResponse`）を実際の API 仕様に合わせて調整してください。
+
 ## API クライアントの構成
 
 `src/lib/api.ts` に一元管理する。各コンポーネントやフックから直接 `fetch` を呼ばない。

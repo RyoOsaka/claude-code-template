@@ -83,10 +83,27 @@ GitHub Flow。main は保護ブランチ。
 feat|fix|docs|style|refactor|test|chore: 日本語の説明
 ```
 
+### コミットメッセージ生成
+Claude Code の `/commit` コマンドを使用してコミットメッセージを自動生成する。
+生成時は以下のルールに従うこと:
+- 形式: `<type>: <日本語の説明>`
+- type は変更内容に応じて適切に選択（feat/fix/docs/style/refactor/test/chore）
+- 説明は「何をしたか」ではなく「なぜ必要か」を重視
+- 50文字以内を目安に簡潔に記述
+- 複数の変更がある場合は本文に箇条書きで補足
+
 ### ルール
 - NEVER: main に直接コミット
 - YOU MUST: feature ブランチで作業 → PR → マージ → ブランチ削除
 - YOU MUST: コード変更時は「ブランチ作成 → commit → push」を一連の流れで行う
+
+### PR 作成
+PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` の形式に従い、以下を自動で記入する:
+- **概要**: ブランチ名とコミット履歴から目的を要約
+- **変更内容**: 変更ファイルと diff から主な変更点を抽出
+- **変更理由**: コミットメッセージから理由を推測して記載
+- **テスト計画**: 変更内容に応じたテスト項目を提案
+- **関連 Issue**: ブランチ名やコミットメッセージから Issue 番号を抽出
 
 ## Environment
 

@@ -1,0 +1,103 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files_ignore: |
+            *.lock
+            *.min.js
+            *.min.css
+            dist/**
+            build/**
+            node_modules/**
+            *.generated.*
+
+      - name: Run AI Review
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          node .github/ai-review/review.mjs
+
+      - name: Post review comment
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            // レビュー結果ファイルが存在するか確認
+            if (!fs.existsSync('.github/ai-review/result.md')) {
+              console.log('No review result found');
+              return;
+            }
+
+            const body = fs.readFileSync('.github/ai-review/result.md', 'utf8');
+
+            // 空の結果はスキップ
+            if (!body.trim()) {
+              console.log('No issues found');
+              return;
+            }
+
+            // 既存のボットコメントを検索
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('## 🤖 AI Code Review')
+            );
+
+            const commentBody = `## 🤖 AI Code Review
+
+            ${body}
+
+            ---
+            <sub>このレビューは自動生成されました。設定は \`.github/ai-review/config.yml\` で変更できます。</sub>`;
+
+            if (botComment) {
+              // 既存コメントを更新
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody,
+              });
+            } else {
+              // 新規コメントを作成
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody,
+              });
+            }

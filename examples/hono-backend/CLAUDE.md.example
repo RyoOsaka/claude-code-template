@@ -1,0 +1,94 @@
+# CLAUDE.md（Hono バックエンド向け追記例）
+
+> この内容をプロジェクトルートの `CLAUDE.md` に追記・マージしてください。
+> ルールファイルとスキルファイルは `.claude/` ディレクトリにコピーしてください。
+
+## セットアップ
+
+```bash
+# ルールファイルをコピー
+cp examples/hono-backend/rules/*.md .claude/rules/
+
+# スキルファイルをコピー
+cp -r examples/hono-backend/skills/* .claude/skills/
+```
+
+## Tech Stack
+
+- Runtime: Node.js / Bun / Cloudflare Workers（プロジェクトに合わせて選択）
+- Framework: Hono + TypeScript
+- ORM: Drizzle ORM
+- Database: PostgreSQL
+- Validation: Zod
+- Testing: Vitest
+- Linter: ESLint + Biome（検討中）
+- Package Manager: pnpm
+
+## Development Commands
+
+```bash
+pnpm install              # 依存パッケージインストール
+pnpm dev                  # 開発サーバー起動（ホットリロード）
+pnpm build                # プロダクションビルド
+pnpm preview              # ビルド後のプレビュー
+pnpm lint                 # ESLint 実行
+pnpm typecheck            # tsc による型チェック
+pnpm test                 # Vitest テスト実行
+pnpm test:watch           # テスト（ウォッチモード）
+pnpm db:generate          # Drizzle スキーマから SQL マイグレーション生成
+pnpm db:migrate           # マイグレーション適用
+pnpm db:studio            # Drizzle Studio（DB ブラウザ）起動
+docker compose up         # Docker 開発環境起動（DB 含む）
+```
+
+## Project Structure
+
+```
+src/
+├── index.ts              # アプリケーションエントリポイント
+├── routes/               # ルートハンドラ（リソースごとに分割）
+│   ├── users.ts
+│   ├── posts.ts
+│   └── health.ts
+├── middleware/            # カスタムミドルウェア
+│   ├── auth.ts
+│   ├── logger.ts
+│   └── errorHandler.ts
+├── db/                   # データベース関連
+│   ├── client.ts         # Drizzle クライアント（一元管理）
+│   ├── schema/           # Drizzle スキーマ定義
+│   │   ├── users.ts
+│   │   └── posts.ts
+│   └── migrations/       # 自動生成マイグレーション
+├── services/             # ビジネスロジック（ルートから分離）
+│   ├── userService.ts
+│   └── postService.ts
+├── types/                # 型定義
+│   ├── env.ts            # 環境変数の型
+│   └── api.ts            # API リクエスト/レスポンスの型
+├── lib/                  # 共通ユーティリティ
+│   ├── errors.ts         # カスタムエラークラス
+│   └── validation.ts     # 共通バリデーションスキーマ
+└── __tests__/            # テスト（または各ファイルの隣に配置）
+drizzle.config.ts         # Drizzle 設定
+vitest.config.ts          # Vitest 設定
+```
+
+## Critical Rules（追加分）
+
+### NEVER
+- `any` 型を使用しない（`unknown` + 型ガードを使う）
+- `@ts-ignore` / `@ts-nocheck` を使用しない
+- 認証情報（API キー、DB 接続文字列）をハードコードしない
+- バリデーションなしでユーザー入力を信頼しない
+- エラーレスポンスに内部実装の詳細を露出しない
+- SQL を文字列結合で組み立てない（Drizzle ORM を使う）
+
+### YOU MUST
+- `tsconfig.json` で `strict: true` を有効にする
+- すべての API エンドポイントで Zod バリデーションを適用する
+- 非同期処理にエラーハンドリングを実装する
+- 新しいエンドポイントにはテストを作成する
+- コミット前に `pnpm lint` と `pnpm typecheck` を通す
+- 環境変数は `src/types/env.ts` で型定義する
+- レスポンス形式を統一する（`{ data, error, message }` 形式）

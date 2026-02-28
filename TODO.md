@@ -7,37 +7,33 @@ Claude Code ベストプラクティス調査（2026-02-16）に基づく改善�
 
 ## 高優先度
 
-### TODO-001: infrastructure-design.md と terraform.md を skills に移行
+### TODO-001: infrastructure-design.md と terraform.md に paths フロントマターを追加
 
 **現状**: `.claude/rules/` に配置されており、毎セッション合計 763行が無条件ロードされる。
 **問題**: インフラ作業時以外はコンテキストの無駄消費。Claude の指示遵守率低下の原因になる。
 **対応**:
 
-1. `.claude/skills/infrastructure/SKILL.md` を作成
+1. `infrastructure-design.md` の先頭に paths フロントマターを追加:
    ```yaml
    ---
-   name: infrastructure
-   description: インフラ設計ガイドライン（可用性・ネットワーク・セキュリティ・監視・バックアップ・スケーリング・コスト最適化）
-   disable-model-invocation: true
-   user-invocable: true
+   paths:
+     - "infrastructure/**"
+     - "terraform/**"
    ---
    ```
-2. `.claude/skills/infrastructure/` 配下に現 `infrastructure-design.md` の内容を移動
-3. `.claude/skills/terraform/SKILL.md` を作成
+2. `terraform.md` の先頭に paths フロントマターを追加:
    ```yaml
    ---
-   name: terraform
-   description: Terraform インフラガイドライン（AWS/GCP 対応、モジュール設計、CI/CD）
-   disable-model-invocation: true
-   user-invocable: true
+   paths:
+     - "infrastructure/**"
+     - "**/*.tf"
+     - "**/*.tfvars"
    ---
    ```
-4. `.claude/skills/terraform/` 配下に現 `terraform.md` の内容を移動
-5. `.claude/rules/infrastructure-design.md` と `.claude/rules/terraform.md` を削除
-6. README.md の該当箇所を更新
+3. これらのルールを `examples/infrastructure/` に移動することを検討（インフラ不要なプロジェクトではルール自体が不要なため）
 
-**効果**: 毎セッションのルール読み込みが 763行分削減。
-**参考**: 公式ドキュメント「Skills は呼び出し時のみロード、普段はコストゼロ」
+**効果**: インフラ関連ファイルを触ったときのみルールがロードされる。インフラ作業をしないセッションでは 763行分の読み込みが不要に。
+**備考**: `infrastructure/` ディレクトリが存在しなくても問題ない。ファイル作成時点からルールが自動適用される。
 
 ---
 
@@ -158,17 +154,20 @@ Claude Code ベストプラクティス調査（2026-02-16）に基づく改善�
 **問題**: CLAUDE.md の NEVER/YOU MUST ルールは「助言的（advisory）」でしかなく、Claude が無視する可能性がある。
 **対応**:
 
-1. `.claude/settings.json` に hooks セクションを追加:
+1. `.claude/settings.json` の hooks セクションに以下を追加:
+
+   **Hook 1: 保護ファイルの編集ブロック（PreToolUse）**
+   `.env` やロックファイルの意図しない書き換えを防止する。settings.json の deny ではパターンマッチが難しいため Hooks で対応。
    ```json
    {
      "hooks": {
        "PreToolUse": [
          {
-           "matcher": "Bash(git commit*)",
+           "matcher": "Edit|Write",
            "hooks": [
              {
                "type": "command",
-               "command": "echo 'コミット前に pnpm lint && pnpm typecheck を実行してください'"
+               "command": "FILE=$(jq -r '.tool_input.file_path'); case \"$FILE\" in *.env|*.env.*|pnpm-lock.yaml|package-lock.json|yarn.lock) echo \"Protected: $FILE\" >&2; exit 2;; esac"
              }
            ]
          }
@@ -176,10 +175,31 @@ Claude Code ベストプラクティス調査（2026-02-16）に基づく改善�
      }
    }
    ```
+
+   **Hook 2: ファイル編集後の自動フォーマット（PostToolUse）**
+   Claude がファイルを編集するたびに Prettier でフォーマットする。コミット前の lint エラーを削減。
+   ```json
+   {
+     "hooks": {
+       "PostToolUse": [
+         {
+           "matcher": "Edit|Write",
+           "hooks": [
+             {
+               "type": "command",
+               "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write 2>/dev/null || true"
+             }
+           ]
+         }
+       ]
+     }
+   }
+   ```
+
 2. または `.claude/hooks/` にサンプルスクリプトを配置
 3. README.md に Hooks の使い方セクションを追加
 
-**効果**: lint/typecheck の実行忘れを機械的に防止。
+**効果**: 保護ファイルの編集を機械的に防止 + 自動フォーマットで lint エラー削減。
 **注意**: Hooks はセキュリティ境界ではない（公式注記）。あくまで補助的な仕組みとして位置づける。
 
 ---

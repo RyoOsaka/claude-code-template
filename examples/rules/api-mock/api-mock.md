@@ -1,3 +1,10 @@
+---
+paths:
+  - "src/schemas/**"
+  - "src/mocks/**"
+  - "src/api/**"
+---
+
 # API スキーマ & モック ガイドライン
 
 ## 基本方針

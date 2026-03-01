@@ -20,7 +20,7 @@ cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
 
 ### 3. CLAUDE.md を編集
 
-`CLAUDE.md` のプレースホルダー（`<!-- ... -->`）を自分のプロジェクト情報で埋める:
+`CLAUDE.md` のプレースホルダー（`[REQUIRED: ...]`）を自分のプロジェクト情報で埋める:
 - Tech Stack
 - Development Commands
 - Project Structure
@@ -52,7 +52,7 @@ project-root/
 ├── CLAUDE.md                    # コア指示（常時読み込み）
 ├── CHECKLIST.md                 # 設計判断チェックリスト（人間が埋める）
 ├── .claude/
-│   ├── settings.json            # プロジェクト設定
+│   ├── settings.json            # プロジェクト設定（$schema で VS Code 補完対応）
 │   ├── rules/                   # 分野別ルール（常時読み込み）
 │   └── skills/                  # ワークフロー（オンデマンド読み込み）
 └── examples/                    # スタック別サンプル
@@ -193,6 +193,17 @@ CLAUDE.md が長いほど:
 - 重要な指示が埋もれて遵守率が下がる
 - セッションで使える残りコンテキストが減る
 
+### このテンプレートのコンテキストコスト
+
+| ファイル | 改善前（常時読み込み） | 改善後 |
+|---------|---------------------|--------|
+| CLAUDE.md | ~137行 | ~131行 |
+| .claude/rules/ 合計 | ~1,218行（常時） | 0行（全て examples/ に移動済み） |
+| **通常セッション合計** | **~1,355行** | **~131行** |
+
+改善により、通常セッションのコンテキスト消費が約 90% 削減。
+必要なルールは examples/ からコピーし、paths 指定で条件付きロードにできる。
+
 ## サンプルスタック
 
 > **Note**: 現在のサンプルは Node.js ランタイムを前提としています。
@@ -283,6 +294,17 @@ $ARGUMENTS マイグレーションを作成する。
 $ARGUMENTS を処理する           # → "users" を処理する
 const ${ARGUMENTS}Routes = ... # → const usersRoutes = ...（JS変数名として）
 ```
+
+## Hooks（ツール実行前後の自動処理）
+
+Claude がツールを使う前後にシェルコマンドを自動実行する仕組み。CLAUDE.md のルールは「お願い」だが、Hooks は「仕組みで強制」できる。
+
+サンプル設定が `examples/hooks/settings.json.example` にある。必要な部分を `.claude/settings.json` にマージして使う。
+
+| Hook | タイミング | 内容 |
+|------|-----------|------|
+| PreToolUse | Edit/Write の**前** | `.env` やロックファイルの編集をブロック |
+| PostToolUse | Edit/Write の**後** | Prettier で自動フォーマット |
 
 ## ルールファイルのベストプラクティス
 

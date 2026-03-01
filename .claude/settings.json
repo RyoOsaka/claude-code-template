@@ -40,7 +40,11 @@
       "Edit(/etc/passwd)",
       "Edit(/etc/shadow)",
       "Edit(~/.ssh/id_rsa)",
-      "Edit(~/.ssh/id_ed25519)"
+      "Edit(~/.ssh/id_ed25519)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(.env.local)",
+      "Read(.env.*.local)"
     ]
   },
   "enabledPlugins": {

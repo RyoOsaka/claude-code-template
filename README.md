@@ -52,7 +52,7 @@ project-root/
 ├── CLAUDE.md                    # コア指示（常時読み込み）
 ├── CHECKLIST.md                 # 設計判断チェックリスト（人間が埋める）
 ├── .claude/
-│   ├── settings.json            # プロジェクト設定
+│   ├── settings.json            # プロジェクト設定（$schema で VS Code 補完対応）
 │   ├── rules/                   # 分野別ルール（常時読み込み）
 │   └── skills/                  # ワークフロー（オンデマンド読み込み）
 └── examples/                    # スタック別サンプル

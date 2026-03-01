@@ -1,3 +1,10 @@
+---
+paths:
+  - "infrastructure/**"
+  - "**/*.tf"
+  - "**/*.tfvars"
+---
+
 # Terraform インフラガイドライン
 
 ## 基本方針

@@ -1,3 +1,10 @@
+---
+name: agent-team
+description: agent team 機能を使った機能開発のガイドライン。チーム構成・開発フロー・モック戦略・進捗ログの書き方を含む。
+disable-model-invocation: true
+user-invocable: true
+---
+
 # Agent Team 開発ガイドライン
 
 agent team 機能を使った機能開発の進め方。

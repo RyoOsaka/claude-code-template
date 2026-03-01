@@ -284,6 +284,17 @@ $ARGUMENTS を処理する           # → "users" を処理する
 const ${ARGUMENTS}Routes = ... # → const usersRoutes = ...（JS変数名として）
 ```
 
+## Hooks（ツール実行前後の自動処理）
+
+Claude がツールを使う前後にシェルコマンドを自動実行する仕組み。CLAUDE.md のルールは「お願い」だが、Hooks は「仕組みで強制」できる。
+
+サンプル設定が `examples/hooks/settings.json.example` にある。必要な部分を `.claude/settings.json` にマージして使う。
+
+| Hook | タイミング | 内容 |
+|------|-----------|------|
+| PreToolUse | Edit/Write の**前** | `.env` やロックファイルの編集をブロック |
+| PostToolUse | Edit/Write の**後** | Prettier で自動フォーマット |
+
 ## ルールファイルのベストプラクティス
 
 ### コード例の量に注意

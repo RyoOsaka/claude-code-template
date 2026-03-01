@@ -20,7 +20,7 @@ cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
 
 ### 3. CLAUDE.md を編集
 
-`CLAUDE.md` のプレースホルダー（`<!-- ... -->`）を自分のプロジェクト情報で埋める:
+`CLAUDE.md` のプレースホルダー（`[REQUIRED: ...]`）を自分のプロジェクト情報で埋める:
 - Tech Stack
 - Development Commands
 - Project Structure

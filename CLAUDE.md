@@ -6,19 +6,16 @@
 
 ## Tech Stack
 
-<!-- ここにプロジェクトの技術スタックを記載する -->
-<!-- 使わないスタックの行は削除する -->
-
-- Runtime: <!-- Node.js / Bun / Deno / Cloudflare Workers -->
-- Frontend: <!-- React / Next.js / Vue / Svelte --> + TypeScript <!-- + Vite -->
-- Backend: <!-- Hono / Express / Fastify --> + TypeScript
-- Database: <!-- PostgreSQL / MySQL / SQLite -->
-- ORM: <!-- Drizzle / Prisma -->
-- Validation: <!-- Zod / Valibot -->
-- Testing: <!-- Vitest / Jest -->
-- Linter: <!-- ESLint / Biome -->
-- Hosting: <!-- Vercel / Cloudflare / AWS -->
-- Package Manager: <!-- pnpm / npm / bun -->
+- Runtime: [REQUIRED: Node.js / Bun / Deno / Cloudflare Workers から選択]
+- Frontend: [REQUIRED: React / Next.js / Vue / Svelte から選択] + TypeScript
+- Backend: [REQUIRED: Hono / Express / Fastify から選択] + TypeScript
+- Database: [REQUIRED: PostgreSQL / MySQL / SQLite から選択]
+- ORM: [REQUIRED: Drizzle / Prisma から選択]
+- Validation: [REQUIRED: Zod / Valibot から選択]
+- Testing: [REQUIRED: Vitest / Jest から選択]
+- Linter: [REQUIRED: ESLint / Biome から選択]
+- Hosting: [REQUIRED: Vercel / Cloudflare / AWS から選択]
+- Package Manager: [REQUIRED: pnpm / npm / bun から選択]
 
 ## Development Commands
 
@@ -125,8 +122,6 @@ PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` の形式に従い、以下�
 - 新機能には必ず単体テストを作成する（テストなしのコミットは禁止）
 - API 作成時は Zod スキーマを定義し、モックも併せて作成する
 - 画面を伴う機能には E2E テストを作成する（主要な操作フローをカバー）
-
-<!-- スタック固有のルールは .claude/rules/ に追加する -->
 
 ## AI Assistant Behavior
 

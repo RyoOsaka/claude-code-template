@@ -144,6 +144,7 @@ PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` の形式に従い、以下�
 - 実装後は `pnpm test` で成功を確認する
 - API 作成時は Zod スキーマを定義し、モックも併せて作成する
 - 画面を伴う機能には E2E テストを作成する（主要な操作フローをカバー）
+- 新規ディレクトリを作成したら README.md を追加する（目的・使い方・ファイル一覧を記載）
 
 ## AI Assistant Behavior
 

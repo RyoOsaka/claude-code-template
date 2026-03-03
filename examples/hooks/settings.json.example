@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(jq -r '.tool_input.file_path'); case \"$FILE\" in *.env|*.env.*|pnpm-lock.yaml|package-lock.json|yarn.lock) echo \"Protected: $FILE\" >&2; exit 2;; esac"
+            "command": "examples/hooks/scripts/protect-files.sh"
           }
         ]
       },
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "CMD=$(jq -r '.tool_input.command'); case \"$CMD\" in 'git commit'*) pnpm lint && pnpm typecheck && pnpm test || exit 2;; esac"
+            "command": "examples/hooks/scripts/pre-commit-check.sh"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write 2>/dev/null"
+            "command": "examples/hooks/scripts/format-on-save.sh"
           }
         ]
       }

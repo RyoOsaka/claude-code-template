@@ -1,9 +1,9 @@
 ---
 paths:
-  - "packages/api/src/routes/**"
-  - "packages/api/src/middleware/**"
-  - "packages/api/src/index.ts"
-  - "packages/api/src/app.ts"
+  - "src/api/src/routes/**"
+  - "src/api/src/middleware/**"
+  - "src/api/src/index.ts"
+  - "src/api/src/app.ts"
 ---
 
 # Hono プロジェクト規約

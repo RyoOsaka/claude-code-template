@@ -1,8 +1,8 @@
 ---
 paths:
-  - "packages/web/src/**/*.test.tsx"
-  - "packages/web/src/**/*.test.ts"
-  - "packages/web/vitest.config.ts"
+  - "src/web/src/**/*.test.tsx"
+  - "src/web/src/**/*.test.ts"
+  - "src/web/vitest.config.ts"
 ---
 
 # テストルール（フロントエンド）

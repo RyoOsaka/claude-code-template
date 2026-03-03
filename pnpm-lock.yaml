@@ -18,7 +18,7 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9(@types/node@22.19.13)(jsdom@25.0.1)(msw@2.12.10(@types/node@22.19.13)(typescript@5.9.3))
 
-  packages/api:
+  src/api:
     dependencies:
       '@app/shared':
         specifier: workspace:*
@@ -64,9 +64,9 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9(@types/node@22.19.13)(jsdom@25.0.1)(msw@2.12.10(@types/node@22.19.13)(typescript@5.9.3))
 
-  packages/shared: {}
+  src/shared: {}
 
-  packages/web:
+  src/web:
     dependencies:
       '@app/shared':
         specifier: workspace:*

@@ -1,7 +1,7 @@
 ---
 paths:
-  - "packages/web/src/lib/api*"
-  - "packages/web/src/hooks/**"
+  - "src/web/src/lib/api*"
+  - "src/web/src/hooks/**"
 ---
 
 # API クライアントルール

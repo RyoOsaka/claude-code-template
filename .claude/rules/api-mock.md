@@ -1,8 +1,8 @@
 ---
 paths:
-  - "packages/web/src/schemas/**"
-  - "packages/web/src/mocks/**"
-  - "packages/shared/src/**"
+  - "src/web/src/schemas/**"
+  - "src/web/src/mocks/**"
+  - "src/shared/src/**"
 ---
 
 # API スキーマ & モック ガイドライン

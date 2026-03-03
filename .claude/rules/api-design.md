@@ -1,6 +1,6 @@
 ---
 paths:
-  - "packages/api/src/routes/**"
+  - "src/api/src/routes/**"
 ---
 
 # API 設計ルール

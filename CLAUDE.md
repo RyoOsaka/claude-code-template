@@ -61,7 +61,7 @@ docker compose up -d      # PostgreSQL 起動
 │   ├── rules/
 │   ├── skills/
 │   └── hooks/
-└── packages/
+└── src/
     ├── api/                      # Hono バックエンド
     │   ├── src/
     │   │   ├── index.ts          # エントリポイント
@@ -88,8 +88,9 @@ docker compose up -d      # PostgreSQL 起動
     │   │   └── styles/           # CSS 変数・グローバルスタイル
     │   ├── vite.config.ts
     │   └── vitest.config.ts
-    └── shared/                   # 共有パッケージ（型・Zod スキーマ）
-        └── src/index.ts
+    ├── shared/                   # 共有パッケージ（型・Zod スキーマ）
+    │   └── src/index.ts
+    └── infrastructure/           # IaC（Terraform 等）
 ```
 
 ## Git Workflow

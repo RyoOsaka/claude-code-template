@@ -1,6 +1,6 @@
 ---
 paths:
-  - "packages/web/**"
+  - "src/web/**"
 ---
 
 # TypeScript ルール（フロントエンド）

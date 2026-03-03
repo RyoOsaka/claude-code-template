@@ -1,8 +1,8 @@
 ---
 paths:
-  - "packages/web/src/components/**"
-  - "packages/web/src/pages/**"
-  - "packages/web/src/App.tsx"
+  - "src/web/src/components/**"
+  - "src/web/src/pages/**"
+  - "src/web/src/App.tsx"
 ---
 
 # React ルール

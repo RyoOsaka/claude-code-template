@@ -13,10 +13,6 @@
     "declarationMap": true,
     "sourceMap": true
   },
-  "references": [
-    { "path": "./packages/api" },
-    { "path": "./packages/web" },
-    { "path": "./packages/shared" }
-  ],
+  "references": [{ "path": "./src/api" }, { "path": "./src/web" }, { "path": "./src/shared" }],
   "files": []
 }

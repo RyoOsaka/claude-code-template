@@ -1,7 +1,7 @@
 ---
 paths:
-  - "packages/**/*.test.ts"
-  - "packages/**/*.test.tsx"
+  - "src/**/*.test.ts"
+  - "src/**/*.test.tsx"
 ---
 
 # TDD（テスト駆動開発）ルール

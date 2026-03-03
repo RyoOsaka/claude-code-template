@@ -1,6 +1,6 @@
 ---
 paths:
-  - "packages/api/src/**"
+  - "src/api/src/**"
 ---
 
 # ログルール

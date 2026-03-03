@@ -1,7 +1,7 @@
 ---
 paths:
-  - "packages/api/src/db/**"
-  - "packages/api/drizzle.config.ts"
+  - "src/api/src/db/**"
+  - "src/api/drizzle.config.ts"
 ---
 
 # データベースルール

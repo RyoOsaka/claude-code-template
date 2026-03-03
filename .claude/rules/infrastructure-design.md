@@ -1,7 +1,6 @@
 ---
 paths:
-  - "infrastructure/**"
-  - "terraform/**"
+  - "src/infrastructure/**"
 ---
 
 # インフラ設計ガイドライン

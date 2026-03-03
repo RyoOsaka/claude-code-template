@@ -1,6 +1,6 @@
 ---
 paths:
-  - "packages/api/**"
+  - "src/api/**"
 ---
 
 # TypeScript ルール（バックエンド）

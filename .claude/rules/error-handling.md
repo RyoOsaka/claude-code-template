@@ -1,9 +1,9 @@
 ---
 paths:
-  - "packages/api/src/lib/errors.ts"
-  - "packages/api/src/middleware/**"
-  - "packages/api/src/routes/**"
-  - "packages/api/src/services/**"
+  - "src/api/src/lib/errors.ts"
+  - "src/api/src/middleware/**"
+  - "src/api/src/routes/**"
+  - "src/api/src/services/**"
 ---
 
 # エラーハンドリングルール

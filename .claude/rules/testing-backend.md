@@ -1,7 +1,7 @@
 ---
 paths:
-  - "packages/api/src/**/*.test.ts"
-  - "packages/api/vitest.config.ts"
+  - "src/api/src/**/*.test.ts"
+  - "src/api/vitest.config.ts"
 ---
 
 # テストルール

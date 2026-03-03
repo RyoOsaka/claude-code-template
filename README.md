@@ -50,7 +50,7 @@ cp -r examples/skills/component/ .claude/skills/
 cp -r examples/skills/hook/ .claude/skills/
 ```
 
-`examples/rules/CLAUDE.md.*-example` や `examples/CLAUDE.md.template` も参考にして CLAUDE.md を追記する。
+`examples/CLAUDE.md.template` を参考にして CLAUDE.md を編集する。
 
 ### 5. 不要な examples/ を削除
 

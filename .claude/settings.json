@@ -51,6 +51,39 @@
       "Read(.env.*.local)"
     ]
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/scripts/protect-files.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/scripts/pre-commit-check.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/scripts/format-on-save.sh"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "github@claude-plugins-official": true,

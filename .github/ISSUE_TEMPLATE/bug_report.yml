@@ -1,0 +1,93 @@
+name: "Bug Report"
+description: "バグや不具合の報告"
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。
+        以下のフォームに必要事項を記入してください。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "バグの概要"
+      description: "発生している問題を簡潔に説明してください"
+      placeholder: "例: ログインボタンをクリックしても画面遷移しない"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: "再現手順"
+      description: "バグを再現するための手順を記載してください"
+      placeholder: |
+        1. '...' ページにアクセス
+        2. '...' をクリック
+        3. '...' を入力
+        4. エラーが発生
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "期待する動作"
+      description: "本来どのように動作すべきかを記載してください"
+      placeholder: "例: ログインボタンをクリックするとダッシュボードに遷移する"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "実際の動作"
+      description: "現在どのように動作しているかを記載してください"
+      placeholder: "例: ボタンをクリックしても何も起こらない"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "深刻度"
+      description: "バグの影響度を選択してください"
+      options:
+        - "critical: サービス停止・データ損失"
+        - "high: 主要機能が使用不可"
+        - "medium: 機能の一部に支障"
+        - "low: 軽微な問題"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "環境情報"
+      description: "バグが発生した環境を記載してください"
+      placeholder: |
+        - OS: macOS 14.0
+        - Browser: Chrome 120
+        - Node.js: 20.10.0
+        - その他関連バージョン
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "エラーログ・スクリーンショット"
+      description: "関連するエラーメッセージやスクリーンショットがあれば添付してください"
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "補足情報"
+      description: "その他、参考になる情報があれば記載してください"
+    validations:
+      required: false

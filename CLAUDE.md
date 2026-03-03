@@ -67,27 +67,45 @@ src/
 
 ## Git Workflow
 
-GitHub Flow。main は保護ブランチ。
+GitHub Flow。main は保護ブランチ。Issue 駆動開発を採用する。
+
+### Issue 駆動開発フロー
+
+```
+Issue 取得 → ブランチ作成 → TDD → 品質チェック → コミット → PR → マージ
+```
+
+1. **Issue 取得**: `gh issue view #N` で要件を確認
+2. **ブランチ作成**: `<type>/#<issue>-<description>` 形式
+3. **TDD**: Red（テスト先行）→ Green（実装）→ Refactor
+4. **品質チェック**: `pnpm lint && pnpm typecheck && pnpm test`
+5. **コミット**: `<type>: <説明> (#<issue>)` 形式
+6. **PR 作成**: `Closes #<issue>` を含める
+7. **マージ**: PR マージで Issue 自動クローズ
 
 ### ブランチ命名
-- `feature/xxx` - 新機能
-- `fix/xxx` - バグ修正
-- `chore/xxx` - 環境整備
-- `docs/xxx` - ドキュメント
+
+Issue 番号を含める:
+- `feature/#123-user-login` - 新機能
+- `fix/#456-auth-bug` - バグ修正
+- `chore/#789-upgrade-deps` - 環境整備
+- `docs/#012-api-reference` - ドキュメント
 
 ### コミット規約（Conventional Commits）
 ```
-feat|fix|docs|style|refactor|test|chore: 日本語の説明
+<type>: <日本語の説明> (#<issue>)
 ```
+- type: feat/fix/docs/style/refactor/test/chore
 
 ### コミットメッセージ生成
 Claude Code の `/commit` コマンドを使用してコミットメッセージを自動生成する。
 生成時は以下のルールに従うこと:
-- 形式: `<type>: <日本語の説明>`
+- 形式: `<type>: <日本語の説明> (#<issue>)`
 - type は変更内容に応じて適切に選択（feat/fix/docs/style/refactor/test/chore）
 - 説明は「何をしたか」ではなく「なぜ必要か」を重視
 - 50文字以内を目安に簡潔に記述
 - 複数の変更がある場合は本文に箇条書きで補足
+- Issue 番号を末尾に含める
 
 ### ルール
 - NEVER: main に直接コミット
@@ -100,7 +118,7 @@ PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` の形式に従い、以下�
 - **変更内容**: 変更ファイルと diff から主な変更点を抽出
 - **変更理由**: コミットメッセージから理由を推測して記載
 - **テスト計画**: 変更内容に応じたテスト項目を提案
-- **関連 Issue**: ブランチ名やコミットメッセージから Issue 番号を抽出
+- **関連 Issue**: `Closes #<issue>` 形式で記載（PR マージ時に自動クローズ）
 
 ## Environment
 
@@ -115,11 +133,15 @@ PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` の形式に従い、以下�
 - `.env` を git にコミットしない
 - テスト失敗状態でコミットしない
 - 認証情報をハードコードしない
+- テストより先に実装コードを書かない（TDD 必須）
+- 失敗するテストを確認せずに実装を書かない（RED フェーズをスキップしない）
 
 ### YOU MUST
 - コミット前に lint と型チェックを通す
 - 非同期処理にエラーハンドリングを実装する
-- 新機能には必ず単体テストを作成する（テストなしのコミットは禁止）
+- 新機能は必ず TDD で開発する（Red → Green → Refactor）
+- 機能追加時は先にテストを書き、`pnpm test` で失敗を確認してから実装する
+- 実装後は `pnpm test` で成功を確認する
 - API 作成時は Zod スキーマを定義し、モックも併せて作成する
 - 画面を伴う機能には E2E テストを作成する（主要な操作フローをカバー）
 

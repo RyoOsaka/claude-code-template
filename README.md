@@ -295,6 +295,31 @@ $ARGUMENTS を処理する           # → "users" を処理する
 const ${ARGUMENTS}Routes = ... # → const usersRoutes = ...（JS変数名として）
 ```
 
+## Branch Protection 設定（自動マージ用）
+
+AI レビュー通過後の自動マージを有効にするには、GitHub の Branch Protection を設定する。
+
+### 設定手順
+
+1. **Settings → Branches → Add rule**
+2. **Branch name pattern**: `main`
+3. 以下を有効化:
+   - ✅ Require a pull request before merging
+   - ✅ Require status checks to pass before merging
+     - `ai-review` を必須チェックとして追加
+   - ✅ Require branches to be up to date before merging
+4. **Save changes**
+
+### 自動マージの使い方
+
+PR 作成後に以下を実行:
+
+```bash
+gh pr merge --auto --squash
+```
+
+AI レビュー（`ai-review` ワークフロー）が通過すると自動的にマージされる。
+
 ## Hooks（ツール実行前後の自動処理）
 
 Claude がツールを使う前後にシェルコマンドを自動実行する仕組み。CLAUDE.md のルールは「お願い」だが、Hooks は「仕組みで強制」できる。

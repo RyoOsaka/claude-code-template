@@ -10,7 +10,7 @@ Claude Code を使った開発の生産性を最大化するための設定テ�
 ```bash
 # このリポジトリをクローン or テンプレートとして使用
 cp -r claude-code-template/.claude your-project/.claude
-cp claude-code-template/CLAUDE.md your-project/CLAUDE.md
+cp claude-code-template/examples/CLAUDE.md.template your-project/CLAUDE.md
 ```
 
 ### 2. CHECKLIST.md で設計判断を整理
@@ -50,7 +50,7 @@ cp -r examples/skills/component/ .claude/skills/
 cp -r examples/skills/hook/ .claude/skills/
 ```
 
-`examples/rules/CLAUDE.md.*-example` も参考にして CLAUDE.md を追記する。
+`examples/rules/CLAUDE.md.*-example` や `examples/CLAUDE.md.template` も参考にして CLAUDE.md を追記する。
 
 ### 5. 不要な examples/ を削除
 

@@ -37,7 +37,9 @@
       "coverage",
       ".next",
       "*.d.ts",
-      "pnpm-lock.yaml"
+      "pnpm-lock.yaml",
+      ".github",
+      "examples"
     ]
   }
 }

@@ -68,5 +68,3 @@ cp examples/rules/tdd/tdd.md .claude/rules/
 | ファイル | 内容 |
 |---------|------|
 | .env.example | 環境変数テンプレート |
-| CLAUDE.md.hono-example | Hono バックエンド向け CLAUDE.md サンプル |
-| CLAUDE.md.react-example | React フロントエンド向け CLAUDE.md サンプル |

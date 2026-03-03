@@ -113,11 +113,23 @@ Claude Code の `/commit` コマンドを使用してコミットメッセージ
 - YOU MUST: コード変更時は「ブランチ作成 → commit → push」を一連の流れで行う
 
 ### PR 作成
-PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` の形式に従い、以下を自動で記入する:
+PR 作成時はブランチ名からテンプレートを選択し、`gh pr create` で作成する:
+
+| ブランチ prefix | テンプレート | 用途 |
+|----------------|-------------|------|
+| `feature/` | `feature.md` | 新機能追加 |
+| `fix/` | `bugfix.md` | バグ修正 |
+| `docs/` | `docs.md` | ドキュメント変更 |
+| `refactor/` | `refactor.md` | リファクタリング |
+| `chore/` | `chore.md` | 依存更新・CI・設定変更 |
+
+```bash
+gh pr create --template <template>.md
+```
+
+テンプレートの各項目を自動で記入する:
 - **概要**: ブランチ名とコミット履歴から目的を要約
 - **変更内容**: 変更ファイルと diff から主な変更点を抽出
-- **変更理由**: コミットメッセージから理由を推測して記載
-- **テスト計画**: 変更内容に応じたテスト項目を提案
 - **関連 Issue**: `Closes #<issue>` 形式で記載（PR マージ時に自動クローズ）
 
 ## Environment

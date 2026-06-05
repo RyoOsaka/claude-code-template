@@ -5,6 +5,7 @@
     "pr": ""
   },
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
       "Bash(pnpm:*)",
       "Bash(npm:*)",
@@ -24,7 +25,12 @@
       "Bash(gh repo create:*)",
       "Bash(gh --version:*)"
     ],
+    "ask": [
+      "Bash(gh pr merge:*)",
+      "Bash(gh pr close:*)"
+    ],
     "deny": [
+      "Bash(gh repo delete:*)",
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
       "Bash(rm -rf .git)",

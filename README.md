@@ -315,8 +315,13 @@ Claude がツールを使う前後にシェルコマンドを自動実行する�
 
 | Hook | タイミング | 内容 |
 |------|-----------|------|
+| SessionStart | セッション開始時 | branch・git 状況・未マージ PR を context 注入 |
 | PreToolUse | Edit/Write の**前** | `.env` やロックファイルの編集をブロック |
 | PostToolUse | Edit/Write の**後** | Prettier で自動フォーマット |
+| Stop | 応答完了時 | lint/typecheck の品質ゲート・自動レビュー（完了を差し止め） |
+
+`Stop` フックは「実装したら必ずレビュー」「テストが通るまで完了させない」を**仕組みで強制**できる。
+詳細は [examples/hooks/README.md](examples/hooks/README.md) を参照。
 
 ## ルールファイルのベストプラクティス
 

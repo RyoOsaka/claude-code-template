@@ -30,6 +30,30 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "examples/hooks/scripts/quality-gate.sh"
+          },
+          {
+            "type": "command",
+            "command": "examples/hooks/scripts/auto-review.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "examples/hooks/scripts/session-context.sh"
+          }
+        ]
+      }
     ]
   }
 }

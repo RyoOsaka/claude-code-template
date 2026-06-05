@@ -33,6 +33,8 @@ cp claude-code-template/examples/CLAUDE.md.template your-project/CLAUDE.md
 - [examples/rules/README.md](examples/rules/README.md) - ルール一覧と組み合わせ例
 - [examples/skills/README.md](examples/skills/README.md) - スキル一覧と組み合わせ例
 - [examples/agents/README.md](examples/agents/README.md) - サブエージェント一覧と起動方式
+- [examples/statusline/README.md](examples/statusline/README.md) - ステータスライン設定
+- [examples/output-styles/README.md](examples/output-styles/README.md) - 出力スタイル（役割・トーン）
 - [examples/hooks/README.md](examples/hooks/README.md) - Hook の使い方
 
 ```bash
@@ -74,6 +76,10 @@ project-root/
     │   └── README.md            # 一覧と組み合わせ例
     ├── agents/                  # サブエージェントサンプル
     │   └── README.md            # 一覧と起動方式
+    ├── statusline/              # ステータスラインサンプル
+    │   └── README.md            # 設定と表示フィールド
+    ├── output-styles/           # 出力スタイルサンプル
+    │   └── README.md            # 役割・トーンの変更
     └── hooks/                   # Hook サンプル
         └── README.md            # 使い方と各スクリプト説明
 ```
@@ -232,6 +238,8 @@ CLAUDE.md が長いほど:
 - [examples/rules/README.md](examples/rules/README.md) - ルール一覧と組み合わせ例
 - [examples/skills/README.md](examples/skills/README.md) - スキル一覧と組み合わせ例
 - [examples/agents/README.md](examples/agents/README.md) - サブエージェント一覧と起動方式
+- [examples/statusline/README.md](examples/statusline/README.md) - ステータスライン設定
+- [examples/output-styles/README.md](examples/output-styles/README.md) - 出力スタイル（役割・トーン）
 - [examples/hooks/README.md](examples/hooks/README.md) - Hook の使い方
 
 ## 独自ルール・スキルの作り方

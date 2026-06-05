@@ -15,6 +15,7 @@ Claude Code を使った開発の生産性を最大化するための設定・�
 - `examples/CLAUDE.md.template` - ユーザーがコピーして使うテンプレート
 - `examples/rules/` - ルールサンプル
 - `examples/skills/` - スキルサンプル
+- `examples/agents/` - サブエージェントサンプル
 - `examples/hooks/` - Hook サンプル
 - `.claude/` - このリポジトリの Claude Code 設定
 
@@ -34,6 +35,7 @@ Claude Code を使った開発の生産性を最大化するための設定・�
     ├── CLAUDE.md.template        # コピー用テンプレート
     ├── rules/                    # ルールサンプル
     ├── skills/                   # スキルサンプル
+    ├── agents/                   # サブエージェントサンプル
     └── hooks/                    # Hook サンプル
 ```
 
@@ -81,6 +83,7 @@ GitHub Flow。main は保護ブランチ。
 - examples/ にサンプルを追加したら対応する README.md を更新する
 - ルール追加時は `examples/rules/README.md` の一覧表を更新する
 - スキル追加時は `examples/skills/README.md` の一覧表を更新する
+- サブエージェント追加時は `examples/agents/README.md` の一覧表を更新する
 - Hook 追加時は `examples/hooks/README.md` を更新する
 - テンプレートの構造を変更したら README.md のファイル構成図を更新する
 

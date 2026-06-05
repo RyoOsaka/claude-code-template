@@ -298,6 +298,37 @@ const form = useForm({
 
 ---
 
+## .claude/settings.json の permissions
+
+```json
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ],
+    "ask": [
+      "Bash(gh pr merge:*)",
+      "Bash(gh pr close:*)"
+    ],
+    "deny": [
+      "Bash(gh repo delete:*)",
+      "Bash(rm -rf /)",
+      "Bash(git push --force origin main)"
+    ]
+  }
+}
+```
+
+- `defaultMode: plan` で「調査 → 計画承認 → 実行」を既定にし、暴走を防ぐ
+- `push` は許可、取り返しのつかない `gh pr merge` 等は `ask` で確認
+- `deny` は最優先。`gh repo delete`・force push・破壊的操作を禁止
+
+---
+
 ## 使い方
 
 1. このファイルの必要な部分をコピー

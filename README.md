@@ -307,6 +307,57 @@ gh pr merge --auto --squash
 
 AI レビュー（`ai-review` ワークフロー）が通過すると自動的にマージされる。
 
+## Permissions（権限設定）
+
+`.claude/settings.json` の `permissions` で、Claude が実行できる操作を制御する。
+
+### allow / ask / deny
+
+| キー | 意味 |
+|------|------|
+| `allow` | 確認なしで自動実行を許可 |
+| `ask` | 許可するが**毎回確認**を求める（事故防止） |
+| `deny` | 常に禁止（最優先・他を上書き） |
+
+このテンプレートの設定例:
+
+```json
+"permissions": {
+  "defaultMode": "plan",
+  "allow": ["Bash(pnpm:*)", "Bash(git push:*)", "..."],
+  "ask":   ["Bash(gh pr merge:*)", "Bash(gh pr close:*)"],
+  "deny":  ["Bash(gh repo delete:*)", "Bash(git push --force origin main)", "..."]
+}
+```
+
+`git push` は許可しつつ、`gh pr merge` など**取り返しのつきにくい操作は ask**、`gh repo delete` のような**破壊的操作は deny** に置くのが定石。
+
+### defaultMode（既定の権限モード）
+
+セッション開始時の挙動を決める。テンプレートは安全側の `plan` を既定にしている。
+
+| モード | 挙動 |
+|--------|------|
+| `default` | 操作ごとに確認 |
+| `plan` | **読み取り専用で調査 → 計画を提示 → 承認後に実行**（暴走防止・推奨） |
+| `acceptEdits` | ファイル編集は自動承認、それ以外は確認 |
+| `dontAsk` | 許可済み操作を確認なしで実行 |
+| `bypassPermissions` | 権限チェックを完全スキップ（非推奨） |
+
+> プロジェクトに合わせて変更してよい。流れ重視なら `acceptEdits`、慎重に進めたいなら `plan`。
+
+### 設定スコープと優先順位
+
+| スコープ | 場所 | 用途 |
+|---------|------|------|
+| Managed | OS の管理ディレクトリ | 組織全体の強制ポリシー |
+| Local | `.claude/settings.local.json`（gitignore） | 個人・マシン固有 |
+| Project | `.claude/settings.json`（コミット） | チーム共有 |
+| User | `~/.claude/settings.json` | 全プロジェクト共通の個人設定 |
+
+優先順位は Managed > CLI > Local > Project > User。
+ただし**権限ルールは上書きでなく全スコープでマージ**され、`deny` は常に勝つ。
+
 ## Hooks（ツール実行前後の自動処理）
 
 Claude がツールを使う前後にシェルコマンドを自動実行する仕組み。CLAUDE.md のルールは「お願い」だが、Hooks は「仕組みで強制」できる。

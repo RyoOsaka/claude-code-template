@@ -35,6 +35,7 @@ cp claude-code-template/examples/CLAUDE.md.template your-project/CLAUDE.md
 - [examples/agents/README.md](examples/agents/README.md) - サブエージェント一覧と起動方式
 - [examples/statusline/README.md](examples/statusline/README.md) - ステータスライン設定
 - [examples/output-styles/README.md](examples/output-styles/README.md) - 出力スタイル（役割・トーン）
+- [examples/mcp/README.md](examples/mcp/README.md) - MCP サーバー設定（.mcp.json）の書き方
 - [examples/hooks/README.md](examples/hooks/README.md) - Hook の使い方
 
 ```bash
@@ -80,6 +81,8 @@ project-root/
     │   └── README.md            # 設定と表示フィールド
     ├── output-styles/           # 出力スタイルサンプル
     │   └── README.md            # 役割・トーンの変更
+    ├── mcp/                     # MCP サーバー設定サンプル
+    │   └── README.md            # .mcp.json の書き方
     └── hooks/                   # Hook サンプル
         └── README.md            # 使い方と各スクリプト説明
 ```
@@ -92,7 +95,7 @@ project-root/
 |------|------|
 | **読み込み** | セッション開始時に**常時**読み込まれる |
 | **コスト** | 毎セッションでコンテキストを消費し続ける |
-| **推奨サイズ** | **500行以下**（長いほど指示の遵守率が下がる） |
+| **推奨サイズ** | **200行以下**（公式推奨。長いほど指示の遵守率が下がる） |
 
 #### 書くべきもの
 - コミュニケーション言語
@@ -240,6 +243,7 @@ CLAUDE.md が長いほど:
 - [examples/agents/README.md](examples/agents/README.md) - サブエージェント一覧と起動方式
 - [examples/statusline/README.md](examples/statusline/README.md) - ステータスライン設定
 - [examples/output-styles/README.md](examples/output-styles/README.md) - 出力スタイル（役割・トーン）
+- [examples/mcp/README.md](examples/mcp/README.md) - MCP サーバー設定（.mcp.json）の書き方
 - [examples/hooks/README.md](examples/hooks/README.md) - Hook の使い方
 
 ## 独自ルール・スキルの作り方
@@ -293,6 +297,39 @@ $ARGUMENTS マイグレーションを作成する。
 $ARGUMENTS を処理する           # → "users" を処理する
 const ${ARGUMENTS}Routes = ... # → const usersRoutes = ...（JS変数名として）
 ```
+
+## セッション内ワークフロー（AI 駆動開発）
+
+CLAUDE.md.template の「セッションの進め方」を補足する。各機構は本体に書かず、ここで深掘りする（README は常時ロードされないためコストがかからない）。
+
+### plan モード
+
+設計判断を伴う作業は、いきなり実装せず plan モードで進める。
+
+```
+調査（読み取り専用） → 計画を提示 → 人間が承認 → 実装
+```
+
+`.claude/settings.json` の `defaultMode: "plan"` で既定化できる（[Permissions](#permissions権限設定) 参照）。スキーマ変更・認証方式など「やり直しの高い判断」を実装前に止められる。
+
+### TodoWrite（タスク管理）
+
+3 ステップ以上の作業は、Claude の組み込みタスクリストで管理する。進捗が可視化され、複数 PR にまたがる作業でも迷子にならない。Claude が自動で使うが、「TODO で管理して」と明示しても良い。
+
+### 拡張思考（extended thinking）
+
+難しい設計・デバッグでは `think` / `ultrathink` で思考予算を増やす。複雑な原因切り分けや設計トレードオフの検討で精度が上がる。常用するとコストが増えるので、難所に絞る。
+
+### サブエージェント委任
+
+- **調査** → `explorer`（読み取り専用・コンテキスト節約）
+- **レビュー** → `code-reviewer`（差分レビュー）
+
+メイン会話を検索ログで汚さず、別コンテキストで処理して要約だけ返す。詳細は [examples/agents/README.md](examples/agents/README.md)。
+
+### 実際に動かす検証
+
+TDD の Green（テスト通過）で完了とせず、**アプリを起動して動作確認**する。テストが緑でも「画面が動く / API が叩ける」は別問題。`/verify` や `/run` で実際の挙動を確認してから完了とする。
 
 ## Branch Protection 設定（自動マージ用）
 

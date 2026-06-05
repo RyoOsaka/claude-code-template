@@ -132,6 +132,14 @@ gh pr create --template <template>.md
 - **変更内容**: 変更ファイルと diff から主な変更点を抽出
 - **関連 Issue**: `Closes #<issue>` 形式で記載（PR マージ時に自動クローズ）
 
+## セッションの進め方
+
+- 設計判断を伴う作業は **plan モード**で進める（調査 → 計画提示 → 承認 → 実装）
+- 3 ステップ以上の作業は **TodoWrite** でタスク管理し、進捗を可視化する
+- 難しい設計・デバッグは **拡張思考**（`think` / `ultrathink`）で思考予算を増やす
+- 調査は **explorer**、レビューは **code-reviewer** サブエージェントに委任する
+- Green 後はテスト通過で完了とせず、**実際にアプリを動かして確認**する（`/verify`）
+
 ## Environment
 
 - Docker First: `docker compose up` で環境が立ち上がること

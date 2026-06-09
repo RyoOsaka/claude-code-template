@@ -16,6 +16,8 @@ Claude Code を使った開発の生産性を最大化するための設定・�
 - `examples/rules/` - ルールサンプル
 - `examples/skills/` - スキルサンプル
 - `examples/agents/` - サブエージェントサンプル
+- `examples/statusline/` - ステータスラインサンプル
+- `examples/output-styles/` - 出力スタイルサンプル
 - `examples/mcp/` - MCP サーバー設定サンプル
 - `examples/hooks/` - Hook サンプル
 - `.claude/` - このリポジトリの Claude Code 設定
@@ -37,6 +39,8 @@ Claude Code を使った開発の生産性を最大化するための設定・�
     ├── rules/                    # ルールサンプル
     ├── skills/                   # スキルサンプル
     ├── agents/                   # サブエージェントサンプル
+    ├── statusline/               # ステータスラインサンプル
+    ├── output-styles/            # 出力スタイルサンプル
     ├── mcp/                      # MCP サーバー設定サンプル
     └── hooks/                    # Hook サンプル
 ```
@@ -86,6 +90,7 @@ GitHub Flow。main は保護ブランチ。
 - ルール追加時は `examples/rules/README.md` の一覧表を更新する
 - スキル追加時は `examples/skills/README.md` の一覧表を更新する
 - サブエージェント追加時は `examples/agents/README.md` の一覧表を更新する
+- ステータスライン・出力スタイル追加時は対応する README.md を更新する
 - MCP サーバー追加時は `examples/mcp/README.md` を更新する
 - Hook 追加時は `examples/hooks/README.md` を更新する
 - テンプレートの構造を変更したら README.md のファイル構成図を更新する
